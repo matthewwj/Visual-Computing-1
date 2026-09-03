@@ -1,0 +1,56 @@
+#include <opencv2/opencv.hpp>
+#include <iostream>
+#include <opencv2/videoio.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/core.hpp>
+
+int main(int argc, char** argv) {
+    cv::Mat frame;
+    cv::VideoCapture cap;
+
+    const bool usingVideoFile = argc > 1;
+    const double defaultFps = 30.0;
+    double fps = defaultFps;
+
+    if (usingVideoFile) {
+        cap.open(argv[1]);
+    } else {
+        cap.open(0, cv::CAP_ANY);
+    }
+
+    if (!cap.isOpened()) {
+        if (usingVideoFile) {
+            std::cerr << "Error: Could not open video file: " << argv[1] << std::endl;
+        } else {
+            std::cerr << "Error: Could not open camera." << std::endl;
+        }
+        return -1;
+    }
+
+    if (usingVideoFile) {
+        fps = cap.get(cv::CAP_PROP_FPS);
+        if (fps <= 0.0) {
+            fps = defaultFps;
+        }
+    }
+
+    const int frameDelay = static_cast<int>(1000.0 / fps);
+    for (;;) {
+        if (!cap.read(frame) || frame.empty()) {
+            if (!usingVideoFile) {
+                std::cerr << "Error: Could not read frame." << std::endl;
+            }
+            break;
+        }
+        cv::imshow("Camera Feed", frame);
+        if (cv::waitKey(usingVideoFile ? frameDelay : 10) == 0) {
+            break;
+        }
+    }
+
+    cap.release();
+    cv::destroyAllWindows();
+    return 0;
+
+}
+

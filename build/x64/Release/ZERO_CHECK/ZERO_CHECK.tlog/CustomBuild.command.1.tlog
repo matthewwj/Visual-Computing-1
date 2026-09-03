@@ -1,0 +1,10 @@
+^C:\USERS\MATTH\DESKTOP\VISUAL COMPUTING 1\BUILD\CMAKEFILES\5215A5B53DCC58E9919AEACE5FEEE10C\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" "-SC:/Users/matth/Desktop/Visual Computing 1" "-BC:/Users/matth/Desktop/Visual Computing 1/build" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "C:/Users/matth/Desktop/Visual Computing 1/build/MyProject.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
