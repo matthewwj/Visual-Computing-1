@@ -59,13 +59,13 @@ int main(int, char**)
             // Grayscale
             cvtColor(frame, processedFrame, COLOR_BGR2GRAY);
         }
-        else if (filter == 3) {
+        /* else if (filter == 3) {
             // Canny Edge Detection
             Mat gray, edges;
             cvtColor(frame, gray, COLOR_BGR2GRAY);
             Canny(gray, edges, 100, 200);
             processedFrame = edges;
-        }
+        } */
 
         // show live and wait for a key with timeout long enough to show images
         imshow("Live", processedFrame);
